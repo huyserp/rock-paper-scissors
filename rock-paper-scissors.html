@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rock Paper Scissors</title>
+    </head>
+    <body>
+        <script>
+                // RANDOMLY RETURNS EITHER "ROCK," "PAPER," OR
+                //  "SCISSORS" AS THE COMPUTER'S PLAY
+            function computerPlay () {
+                let cpuplay = Math.random();
+                if (cpuplay <= .33) {
+                    return 'Rock'
+                } else if (cpuplay > .33 && cpuplay <= .66) {
+                    return 'Paper'
+                } else {
+                    return 'Scissors'
+                }
+            }
+
+        </script>
+    </body>
+</html>
