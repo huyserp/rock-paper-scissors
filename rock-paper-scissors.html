@@ -42,10 +42,12 @@
                 } else if (playerSelection.toUpperCase() === "PAPER" && computerSelection === "SCISSORS") {
                     return 'The Computer picks ' + computerSelection +': I snip and slice your paper to shreeds with my shiny new scissors!';
                 } else if (playerSelection.toUpperCase() === "SCISSORS" && computerSelection === "ROCK") {
-                    return 'The Computer picks ' + computerSelection +': Your brittle scissors are mangled and distroyed under the girth of my rock!'
+                    return 'The Computer picks ' + computerSelection +': Your brittle scissors are mangled and distroyed under the girth of my rock!';
+                } else if (playerSelection.toUpperCase() === "SCISSORS" && computerSelection === "PAPER") {
+                    return 'The Computer picks ' + computerSelection +': I was once a crisp, pristine sheet of paper.... now confeti.  You\'ve bested me...';
                 } else {
-                    return 'The Computer picks ' + computerSelection +': I was once a crisp, pristine sheet of paper.... now confeti.  You\'ve bested me...'
-                    }
+                    return 'The Computer picks ' + computerSelection +', but you can\'t even follow simple instructions and chose ' + playerSelection + ' so.... you lose.... you just lose.';
+                }
             }
         </script>
     </body>
