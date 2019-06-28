@@ -8,6 +8,11 @@
 
 
         <script>
+
+                let cpuWin = 0;
+                let playerWin = 0;
+                let tie = 0;
+
                 // RANDOMLY RETURNS EITHER "ROCK," "PAPER," OR
                 //  "SCISSORS" AS THE COMPUTER'S PLAY
             function computerPlay () {
@@ -26,29 +31,56 @@
             }
             
             function playRound() {
+
                 const playerSelection = prompt('What do you choose: Rock, Paper, or Scissors?');
                 const computerSelection = computerPlay();
 
                 if (playerSelection.toUpperCase() === "ROCK" && computerSelection === "ROCK" ||
                     playerSelection.toUpperCase() === "PAPER" && computerSelection === "PAPER" ||
                     playerSelection.toUpperCase() === "SCISSORS" && computerSelection === "SCISSORS") {
+                    ++tie;
                     return 'The Computer picks ' + computerSelection +': Tie, play again!';
+
                 } else if (playerSelection.toUpperCase() === "ROCK" && computerSelection === "PAPER") {
+                    ++cpuWin;
                     return 'The Computer picks ' + computerSelection +': You lose! Your rock is cloaked in my expansive paper - no way out!';
+                    
                 } else if (playerSelection.toUpperCase() === "ROCK" && computerSelection === "SCISSORS") {
+                    ++playerWin;
                     return 'The Computer picks ' + computerSelection +': Congratulations, you\'re victorious rock smashes my weak scissors';
+                
                 } else if (playerSelection.toUpperCase() === "PAPER" && computerSelection === "ROCK") {
-                    return 'The Computer picks ' + computerSelection +': I can\'t see! I\'m lost in your paper! You win, you win!!!';
+                    ++playerWin;
+                    return 'The Computer picks ' + computerSelection +': I can\'t see! I\'m lost in your paper! You win, you win!!!';;
+                
                 } else if (playerSelection.toUpperCase() === "PAPER" && computerSelection === "SCISSORS") {
+                    ++cpuWin;
                     return 'The Computer picks ' + computerSelection +': I snip and slice your paper to shreeds with my shiny new scissors!';
+                
                 } else if (playerSelection.toUpperCase() === "SCISSORS" && computerSelection === "ROCK") {
+                    ++cpuWin;
                     return 'The Computer picks ' + computerSelection +': Your brittle scissors are mangled and distroyed under the girth of my rock!';
+                
                 } else if (playerSelection.toUpperCase() === "SCISSORS" && computerSelection === "PAPER") {
+                    ++playerWin;
                     return 'The Computer picks ' + computerSelection +': I was once a crisp, pristine sheet of paper.... now confeti.  You\'ve bested me...';
+                
                 } else {
+                    ++cpuWin;
                     return 'The Computer picks ' + computerSelection +', but you can\'t even follow simple instructions and chose ' + playerSelection + ' so.... you lose.... you just lose.';
                 }
             }
+
+            function keepScore() {
+                return `The Score is  ${playerWin} - ${cpuWin} - ${tie}`;
+            }
+            
+            function playGame() {
+                playRound();
+                keepScore();
+          }
+            
+
         </script>
     </body>
 </html>
