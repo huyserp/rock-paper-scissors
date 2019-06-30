@@ -76,27 +76,21 @@
             
             
             function playGame() {
-                if (playerWin + cpuWin + tie == 5) {
-                    if (playerWin > cpuWin) {
-                        return "the game is over. YOU'VE WON!!!  The final score is: " + playerWin + " - " + cpuWin + " - " + tie;
-                    } else if (cpuWin > playerWin) {
-                        return "the game is over. YOU'VE LOST :( !!!  The final score is: " + playerWin + " - " + cpuWin + " - " + tie;
-                    }
-                } else {
+        
+                for (i = 0; i < 5; i++){
                     console.log(playRound());
                     console.log(keepScore());
                 }
+                if (playerWin + cpuWin + tie == 5) {
+                    if (playerWin > cpuWin) {
+                        return "The game is over. YOU'VE WON!!!  The final score is: " + playerWin + " - " + cpuWin + " - " + tie;
+                    } else if (cpuWin > playerWin) {
+                        return "The game is over. YOU'VE LOST :( !!!  The final score is: " + playerWin + " - " + cpuWin + " - " + tie;
+                    } else {
+                        return "The game is over.  It has proven to be a struggle of equal wits.  TIE GAME!"
+                    }
+                }    
             }
-        
-
-        /* 
-        
-        I need two things:
-        
-        1. the results of each round should return before the next round starts
-        2. the score should reset after each playGame funtion finishes
-        
-        */
 
         </script>
     </body>
