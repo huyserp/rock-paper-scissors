@@ -13,8 +13,6 @@
                 let playerWin = 0;
                 let tie = 0;
 
-                // RANDOMLY RETURNS EITHER "ROCK," "PAPER," OR
-                //  "SCISSORS" AS THE COMPUTER'S PLAY
             function computerPlay () {
 
                 let cpuplay = Math.random();
@@ -71,15 +69,34 @@
                 }
             }
 
+           
             function keepScore() {
                 return `The Score is  ${playerWin} - ${cpuWin} - ${tie}`;
-            }
+            } 
+            
             
             function playGame() {
-                playRound();
-                keepScore();
-          }
-            
+                if (playerWin + cpuWin + tie == 5) {
+                    if (playerWin > cpuWin) {
+                        return "the game is over. YOU'VE WON!!!  The final score is: " + playerWin + " - " + cpuWin + " - " + tie;
+                    } else if (cpuWin > playerWin) {
+                        return "the game is over. YOU'VE LOST :( !!!  The final score is: " + playerWin + " - " + cpuWin + " - " + tie;
+                    }
+                } else {
+                    console.log(playRound());
+                    console.log(keepScore());
+                }
+            }
+        
+
+        /* 
+        
+        I need two things:
+        
+        1. the results of each round should return before the next round starts
+        2. the score should reset after each playGame funtion finishes
+        
+        */
 
         </script>
     </body>
