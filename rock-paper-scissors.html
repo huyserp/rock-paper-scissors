@@ -2,9 +2,21 @@
 <html>
     <head>
         <title>Rock Paper Scissors</title>
+        <style>
+            
+        </style>
     </head>
     <body>
+
         <script>
+/**********************************
+            TO FIX:
+                keep score only for one game at a time, not beyond 5 rounds.  if the player chooses to play again, it should start fresh at 0.
+
+                make sure the final score and winner are displayed after each game of 5 rounds, not just the frist one.
+
+**********************************/
+
 
                 let cpuWin = 0;
                 let playerWin = 0;
@@ -67,27 +79,34 @@
 
            
             function keepScore() {
-                return `The Score is  ${playerWin} - ${cpuWin} - ${tie}`;
+                let score = `The Score is  ${playerWin} - ${cpuWin} - ${tie}`;
+                return score;
+            
             } 
             
-            
             function playGame() {
-        
-                for (i = 0; i < 5; i++){
+                let numberOfRounds = 5;
+                for (i = 0; i < numberOfRounds; i++){
                     console.log(playRound());
                     console.log(keepScore());
-                }
                 if (playerWin + cpuWin + tie == 5) {
                     if (playerWin > cpuWin) {
                         return "The game is over. YOU'VE WON!!!  The final score is: " + playerWin + " - " + cpuWin + " - " + tie;
+                        
                     } else if (cpuWin > playerWin) {
                         return "The game is over. YOU'VE LOST :( !!!  The final score is: " + playerWin + " - " + cpuWin + " - " + tie;
+                        
                     } else {
                         return "The game is over.  It has proven to be a struggle of equal wits.  TIE GAME!"
+                        
                     }
                 }    
             }
-
+            }
+            if (playerWin + cpuWin + tie >= 5) {
+                playerWin = cpuWin = tie = 0;
+            }
+        
         </script>
     </body>
 </html>
