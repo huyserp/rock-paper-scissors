@@ -27,6 +27,9 @@
                 margin-bottom: 5px;
                 color: rgb(194, 128, 67);
             }
+            .gamecontainer {
+                visibility: hidden;
+            }
             .selection{
                 margin-top: 25px;
                 padding-top: 20px;
@@ -39,7 +42,6 @@
                 height: 150px;
                 margin: 20px 40px;
                 border: 2px solid rgb(109, 97, 97);
-                box-shadow: 50px rgb(109, 97, 97);
             }
             .choicePaper:hover, .choiceRock:hover, .choiceScissors:hover {
                 border: 2px solid rgb(109, 97, 97);
@@ -62,8 +64,9 @@
                 height: 50px;
                 width: 100px;
                 margin-left: 300px;
+                margin-top: 30px;
             }
-            .display{
+            .display {
                 margin-top: 25px;
                 padding-top: 10px;
                 max-width: 100%;
@@ -90,21 +93,29 @@
             <h1>Rock Paper Scissors</h1>
             <h2>The classic game you know and love,</h2>
             <h2>now on your browser!</h2>
-            <div class="selection">
-                <h3>Make your choice:</h3>
-                <button class="choiceRock"></button>
-                <button class="choicePaper"></button>
-                <button class="choiceScissors"></button>
-            </div>
-            <button class="startgame" onclick="playGame()">Play Game!</button>
-            <div class="display">
-                <p class="dis-choice"></p>
-                <p class="dis-result"></p>
-                <p class="dis-score"></p>
+            <button class="startgame" onclick="showOptions()">Play Game!</button>
+            <div class="gamecontainer">
+                <div class="selection">
+                    <h3>Make your choice:</h3>
+                    <button class="choiceRock"></button>
+                    <button class="choicePaper"></button>
+                    <button class="choiceScissors"></button>
+                </div>
+                <div class="display">
+                    <p class="dis-choice"></p>
+                    <p class="dis-result"></p>
+                    <p class="dis-score"></p>
+                </div>
             </div>
         </div>
         <script>
 /**********************************
+            I want:
+           
+            upon selecting a button one round is run and the results printed ***SLIGHTLY DELAYED***, then the player is prompted
+            to select again.  this repeats 5 rounds until the game is over and the final results are announced.
+
+            
             TO FIX:
                 keep score only for one game at a time, not beyond 5 rounds.  if the player chooses to play again, it should start fresh at 0.
 
@@ -112,7 +123,8 @@
 
 **********************************/
 
-            const display = document.querySelector('.display');
+            const gameContainer = document.querySelector('.gamecontainer');
+
             const paraChoice = document.querySelector('.dis-choice');
             const paraResult = document.querySelector('.dis-result');
             const paraScore = document.querySelector('.dis-score');
@@ -130,6 +142,14 @@
                 let cpuWin = 0;
                 let playerWin = 0;
                 let tie = 0;
+            
+            function showOptions() {
+                if (gameContainer.style.visibility === "hidden") {
+                    gameContainer.style.visibility = "visible";
+                } else {
+                    gameContainer.style.visibility = "hidden";
+                }
+            }
 
             function computerPlay () {
 
