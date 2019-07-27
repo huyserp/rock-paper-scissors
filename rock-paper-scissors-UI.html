@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rock Paper Scissors with UI</title>
+        <style>
+            html {
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            div.container {
+                max-width: 700px;
+                height: 700px;
+                margin: 0 auto;
+                background-color: rgba(120, 255, 63, .5);
+            }
+            h1, h2 {
+                max-height: 75px;
+                max-width: 500px;
+                margin: 50px auto 10px auto;
+                text-align: center;
+                color: rgb(194, 128, 67);
+            }
+            h2 {
+                margin: 0 auto;
+            }
+            h3 {
+                text-align: center;
+                margin-bottom: 5px;
+                color: rgb(194, 128, 67);
+            }
+            .selection{
+                margin-top: 25px;
+                padding-top: 20px;
+                max-width: 100%;
+                height: 250px;
+            }
+            .choiceRock, .choicePaper, .choiceScissors {
+                display: inline-block;
+                width: 150px;
+                height: 150px;
+                margin: 20px 40px;
+                border: 2px solid rgb(109, 97, 97);
+                box-shadow: 50px rgb(109, 97, 97);
+            }
+            .choicePaper:hover, .choiceRock:hover, .choiceScissors:hover {
+                border: 2px solid rgb(109, 97, 97);
+                box-shadow: 10px rgb(109, 97, 97);
+            }
+            .choiceRock {
+                background-image: url('Images/rock.png');
+                background-size: cover;
+            }
+            .choicePaper {
+                background-image: url('Images/paper.png');
+                background-size: cover;
+            }
+            .choiceScissors {
+                background-image: url('Images/scissors.png');
+                background-size: cover;
+            }
+            .startgame {
+                display: inline-block;
+                height: 50px;
+                width: 100px;
+                margin-left: 300px;
+            }
+            .display{
+                margin-top: 25px;
+                padding-top: 10px;
+                max-width: 100%;
+                height: 200px;
+                
+            }
+            p {
+                color: rgb(194, 128, 67);
+                text-align: center;
+                margin-bottom: 25px;
+                font-size: 150%;
+                font-weight: 700
+            }
+            p.dis-score {
+                font-size: 85%;
+                text-decoration: underline;
+            }
+            
+            
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Rock Paper Scissors</h1>
+            <h2>The classic game you know and love,</h2>
+            <h2>now on your browser!</h2>
+            <div class="selection">
+                <h3>Make your choice:</h3>
+                <button class="choiceRock"></button>
+                <button class="choicePaper"></button>
+                <button class="choiceScissors"></button>
+            </div>
+            <button class="startgame" onclick="playGame()">Play Game!</button>
+            <div class="display">
+                <p class="dis-choice"></p>
+                <p class="dis-result"></p>
+                <p class="dis-score"></p>
+            </div>
+        </div>
+        <script>
+/**********************************
+            TO FIX:
+                keep score only for one game at a time, not beyond 5 rounds.  if the player chooses to play again, it should start fresh at 0.
+
+                make sure the final score and winner are displayed after each game of 5 rounds, not just the frist one.
+
+**********************************/
+
+            const display = document.querySelector('.display');
+            const paraChoice = document.querySelector('.dis-choice');
+            const paraResult = document.querySelector('.dis-result');
+            const paraScore = document.querySelector('.dis-score');
+
+            const btnRock = document.querySelector('.choiceRock');
+            const btnPaper = document.querySelector('.choicePaper');
+            const btnScissors = document.querySelector('.choiceScissors');
+            const btnStartGame = document.querySelector('.startgame');
+            let playerSelection;
+
+            btnRock.addEventListener('click', () => {paraChoice.textContent = 'Your choice is "Rock"'; playerSelection = "ROCK"});
+            btnPaper.addEventListener('click', () => {paraChoice.textContent = 'Your choice is "Paper"'; playerSelection = "PAPER"});
+            btnScissors.addEventListener('click', () => {paraChoice.textContent = 'Your choice is "Scissors"'; playerSelection = "SCISSORS"});
+
+                let cpuWin = 0;
+                let playerWin = 0;
+                let tie = 0;
+
+            function computerPlay () {
+
+                let cpuplay = Math.random();
+                let cpuChoice;
+
+                if (cpuplay <= .33) {
+                    cpuChoice = 'ROCK'
+                } else if (cpuplay > .33 && cpuplay <= .66) {
+                    cpuChoice = 'PAPER'
+                } else {
+                    cpuChoice = 'SCISSORS'
+                }
+                return cpuChoice;
+            }
+            
+            function playRound() {
+
+                const computerSelection = computerPlay();
+
+                if (playerSelection === "ROCK" && computerSelection === "ROCK" ||
+                    playerSelection === "PAPER" && computerSelection === "PAPER" ||
+                    playerSelection === "SCISSORS" && computerSelection === "SCISSORS") {
+                    ++tie;
+                    paraResult.textContent = 'The Computer picks ' + computerSelection +': Tie, play again!';
+
+                } else if (playerSelection === "ROCK" && computerSelection === "PAPER") {
+                    ++cpuWin;
+                    paraResult.textContent = 'The Computer picks ' + computerSelection +': You lose! Your rock is cloaked in my expansive paper - no way out!';
+                    
+                } else if (playerSelection === "ROCK" && computerSelection === "SCISSORS") {
+                    ++playerWin;
+                    paraResult.textContent = 'The Computer picks ' + computerSelection +': Congratulations, your victorious rock smashes my weak scissors';
+                
+                } else if (playerSelection === "PAPER" && computerSelection === "ROCK") {
+                    ++playerWin;
+                    paraResult.textContent = 'The Computer picks ' + computerSelection +': I can\'t see! I\'m lost in your paper! You win, you win!!!';;
+                
+                } else if (playerSelection === "PAPER" && computerSelection === "SCISSORS") {
+                    ++cpuWin;
+                    paraResult.textContent = 'The Computer picks ' + computerSelection +': I snip and slice your paper to shreeds with my shiny new scissors!';
+                
+                } else if (playerSelection === "SCISSORS" && computerSelection === "ROCK") {
+                    ++cpuWin;
+                    paraResult.textContent = 'The Computer picks ' + computerSelection +': Your brittle scissors are mangled and destroyed under the girth of my rock!';
+                
+                } else if (playerSelection === "SCISSORS" && computerSelection === "PAPER") {
+                    ++playerWin;
+                    paraResult.textContent = 'The Computer picks ' + computerSelection +': I was once a crisp, pristine sheet of paper.... now confetti.  You\'ve bested me...';
+                }
+            }
+
+            function keepScore() {
+                let score = `The Score is  ${playerWin} - ${cpuWin} - ${tie}`;
+                paraScore.textContent = score;
+            } 
+            
+            function playGame() {
+                let numberOfRounds = 5;
+                for (i = 0; i < numberOfRounds; i++){
+                    playRound();
+                    keepScore();
+                    if (playerWin + cpuWin + tie == 5) {
+                        if (playerWin > cpuWin) {
+                            return "The game is over. YOU'VE WON!!!  The final score is: " + playerWin + " - " + cpuWin + " - " + tie;
+                        
+                        } else if (cpuWin > playerWin) {
+                            return "The game is over. YOU'VE LOST :( !!!  The final score is: " + playerWin + " - " + cpuWin + " - " + tie;
+                        
+                        } else {
+                            return "The game is over.  It has proven to be a struggle of equal wits.  TIE GAME!"   
+                        }
+                    }    
+                }
+            }
+
+            
+        </script>
+    </body>
+</html>
