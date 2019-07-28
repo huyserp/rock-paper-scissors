@@ -8,9 +8,8 @@
             }
             div.container {
                 max-width: 700px;
-                height: 700px;
                 margin: 0 auto;
-                background-color: rgba(120, 255, 63, .5);
+               /* background-color: rgba(120, 255, 63, .5); */
             }
             h1, h2 {
                 max-height: 75px;
@@ -31,8 +30,8 @@
                 visibility: hidden;
             }
             .selection{
-                margin-top: 25px;
-                padding-top: 20px;
+                margin-top: 5px;
+                padding-top: 0px;
                 max-width: 100%;
                 height: 250px;
             }
@@ -67,8 +66,8 @@
                 margin-top: 30px;
             }
             .display {
-                margin-top: 25px;
-                padding-top: 10px;
+                margin-top: 5px;
+                padding-top: 0px;
                 max-width: 100%;
                 height: 200px;
                 
@@ -93,7 +92,7 @@
             <h1>Rock Paper Scissors</h1>
             <h2>The classic game you know and love,</h2>
             <h2>now on your browser!</h2>
-            <button class="startgame" onclick="showOptions()">Play Game!</button>
+            <button class="startgame">Play Game!</button>
             <div class="gamecontainer">
                 <div class="selection">
                     <h3>Make your choice:</h3>
@@ -125,23 +124,20 @@
 
             const gameContainer = document.querySelector('.gamecontainer');
 
-            const paraChoice = document.querySelector('.dis-choice');
-            const paraResult = document.querySelector('.dis-result');
-            const paraScore = document.querySelector('.dis-score');
+            const btnStartGame = document.querySelector('.startgame');
 
             const btnRock = document.querySelector('.choiceRock');
             const btnPaper = document.querySelector('.choicePaper');
             const btnScissors = document.querySelector('.choiceScissors');
-            const btnStartGame = document.querySelector('.startgame');
+            const choiceBtns = document.querySelectorAll('div.selection button');
+
+            const paraChoice = document.querySelector('.dis-choice');
+            const paraResult = document.querySelector('.dis-result');
+            const paraScore = document.querySelector('.dis-score');
+        
+            
             let playerSelection;
 
-            btnRock.addEventListener('click', () => {paraChoice.textContent = 'Your choice is "Rock"'; playerSelection = "ROCK"});
-            btnPaper.addEventListener('click', () => {paraChoice.textContent = 'Your choice is "Paper"'; playerSelection = "PAPER"});
-            btnScissors.addEventListener('click', () => {paraChoice.textContent = 'Your choice is "Scissors"'; playerSelection = "SCISSORS"});
-
-                let cpuWin = 0;
-                let playerWin = 0;
-                let tie = 0;
             
             function showOptions() {
                 if (gameContainer.style.visibility === "hidden") {
@@ -151,6 +147,37 @@
                 }
             }
 
+            btnStartGame.addEventListener('click', showOptions);
+
+            btnRock.addEventListener('click', () => {
+                playerSelection = "ROCK"; 
+                paraChoice.textContent = 'Your choice is ' + playerSelection;
+                paraResult.textContent = "";
+                setTimeout(playRound, 1500);
+                setTimeout(chooseAgain, 5500);})
+
+            btnPaper.addEventListener('click', () => {
+                playerSelection = "PAPER";
+                paraChoice.textContent = 'Your choice is ' + playerSelection;
+                paraResult.textContent = "";
+                setTimeout(playRound, 1500);
+                setTimeout(chooseAgain, 5500);});
+
+            btnScissors.addEventListener('click', () => {
+                playerSelection = "SCISSORS"; 
+                paraChoice.textContent = 'Your choice is ' + playerSelection;
+                paraResult.textContent = "";
+                setTimeout(playRound, 1500);
+                setTimeout(chooseAgain, 5500);});
+
+    
+        
+        /******************** GAME PLAY ************************/
+
+            let cpuWin = 0;
+            let playerWin = 0;
+            let tie = 0;
+            
             function computerPlay () {
 
                 let cpuplay = Math.random();
@@ -175,38 +202,62 @@
                     playerSelection === "SCISSORS" && computerSelection === "SCISSORS") {
                     ++tie;
                     paraResult.textContent = 'The Computer picks ' + computerSelection +': Tie, play again!';
+                    keepScore();
 
                 } else if (playerSelection === "ROCK" && computerSelection === "PAPER") {
                     ++cpuWin;
-                    paraResult.textContent = 'The Computer picks ' + computerSelection +': You lose! Your rock is cloaked in my expansive paper - no way out!';
-                    
+                    paraResult.textContent = 'The Computer picks ' + computerSelection +
+                    ': You lose! Your rock is cloaked in my expansive paper - no way out!';
+                    keepScore();
+
                 } else if (playerSelection === "ROCK" && computerSelection === "SCISSORS") {
                     ++playerWin;
-                    paraResult.textContent = 'The Computer picks ' + computerSelection +': Congratulations, your victorious rock smashes my weak scissors';
-                
+                    paraResult.textContent = 'The Computer picks ' + computerSelection +
+                    ': Congratulations, your victorious rock smashes my weak scissors';
+                    keepScore();
+
                 } else if (playerSelection === "PAPER" && computerSelection === "ROCK") {
                     ++playerWin;
-                    paraResult.textContent = 'The Computer picks ' + computerSelection +': I can\'t see! I\'m lost in your paper! You win, you win!!!';;
-                
+                    paraResult.textContent = 'The Computer picks ' + computerSelection +
+                    ': I can\'t see! I\'m lost in your paper! You win, you win!!!';
+                    keepScore();
+
                 } else if (playerSelection === "PAPER" && computerSelection === "SCISSORS") {
                     ++cpuWin;
-                    paraResult.textContent = 'The Computer picks ' + computerSelection +': I snip and slice your paper to shreeds with my shiny new scissors!';
-                
+                    paraResult.textContent = 'The Computer picks ' + computerSelection +
+                    ': I snip and slice your paper to shreeds with my shiny new scissors!';
+                    keepScore();
+
                 } else if (playerSelection === "SCISSORS" && computerSelection === "ROCK") {
                     ++cpuWin;
-                    paraResult.textContent = 'The Computer picks ' + computerSelection +': Your brittle scissors are mangled and destroyed under the girth of my rock!';
-                
+                    paraResult.textContent = 'The Computer picks ' + computerSelection +
+                    ': Your brittle scissors are mangled and destroyed under the girth of my rock!';
+                    keepScore();
+
                 } else if (playerSelection === "SCISSORS" && computerSelection === "PAPER") {
                     ++playerWin;
-                    paraResult.textContent = 'The Computer picks ' + computerSelection +': I was once a crisp, pristine sheet of paper.... now confetti.  You\'ve bested me...';
+                    paraResult.textContent = 'The Computer picks ' + computerSelection +
+                    ': I was once a crisp, pristine sheet of paper.... now confetti.  You\'ve bested me...';
+                    keepScore();
                 }
+            }
+
+            function chooseAgain() {
+                paraChoice.textContent = "";
+                paraResult.textContent = "Please, make your next choice.";
             }
 
             function keepScore() {
                 let score = `The Score is  ${playerWin} - ${cpuWin} - ${tie}`;
                 paraScore.textContent = score;
             } 
+
+            /**************************
+            USE FOR END OF GAME DISPLAY
+            CHANGE DIV.GAMECONTAINER CLASS TO .ENDOFGAME CLASS
+            TEXT.CONTENT IS DISPLAYS RESULTS BELOW
             
+
             function playGame() {
                 let numberOfRounds = 5;
                 for (i = 0; i < numberOfRounds; i++){
@@ -225,7 +276,7 @@
                     }    
                 }
             }
-
+            ***************************/
             
         </script>
     </body>
