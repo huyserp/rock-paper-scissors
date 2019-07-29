@@ -42,10 +42,6 @@
                 margin: 20px 40px;
                 border: 2px solid rgb(109, 97, 97);
             }
-            .choicePaper:hover, .choiceRock:hover, .choiceScissors:hover {
-                border: 2px solid rgb(109, 97, 97);
-                box-shadow: 10px rgb(109, 97, 97);
-            }
             .choiceRock {
                 background-image: url('Images/rock.png');
                 background-size: cover;
@@ -111,9 +107,12 @@
 /**********************************
             I want:
            
-            upon selecting a button one round is run and the results printed ***SLIGHTLY DELAYED***, then the player is prompted
-            to select again.  this repeats 5 rounds until the game is over and the final results are announced.
+           add "numberOfRounds" and "RoundsPerGame" variables, us this to check for a 5 round game. 
+           if (numberOfRounds == roundsPerGame) { ... use conditionals below in the playGame function, etc. }
+           
+           work toward a "reset" button, to reset the score... 
 
+           I've tried a couple times, the above. every time it's stopped the current funtionality...
             
             TO FIX:
                 keep score only for one game at a time, not beyond 5 rounds.  if the player chooses to play again, it should start fresh at 0.
@@ -178,6 +177,9 @@
             let playerWin = 0;
             let tie = 0;
             
+            let numberOfRounds = 0;
+            const RoundsPerGame = 5;
+            
             function computerPlay () {
 
                 let cpuplay = Math.random();
@@ -201,41 +203,48 @@
                     playerSelection === "PAPER" && computerSelection === "PAPER" ||
                     playerSelection === "SCISSORS" && computerSelection === "SCISSORS") {
                     ++tie;
+                    ++numberOfRounds;
                     paraResult.textContent = 'The Computer picks ' + computerSelection +': Tie, play again!';
                     keepScore();
 
                 } else if (playerSelection === "ROCK" && computerSelection === "PAPER") {
                     ++cpuWin;
+                    ++numberOfRounds;
                     paraResult.textContent = 'The Computer picks ' + computerSelection +
                     ': You lose! Your rock is cloaked in my expansive paper - no way out!';
                     keepScore();
 
                 } else if (playerSelection === "ROCK" && computerSelection === "SCISSORS") {
                     ++playerWin;
+                    ++numberOfRounds;
                     paraResult.textContent = 'The Computer picks ' + computerSelection +
                     ': Congratulations, your victorious rock smashes my weak scissors';
                     keepScore();
 
                 } else if (playerSelection === "PAPER" && computerSelection === "ROCK") {
                     ++playerWin;
+                    ++numberOfRounds;
                     paraResult.textContent = 'The Computer picks ' + computerSelection +
                     ': I can\'t see! I\'m lost in your paper! You win, you win!!!';
                     keepScore();
 
                 } else if (playerSelection === "PAPER" && computerSelection === "SCISSORS") {
                     ++cpuWin;
+                    ++numberOfRounds;
                     paraResult.textContent = 'The Computer picks ' + computerSelection +
                     ': I snip and slice your paper to shreeds with my shiny new scissors!';
                     keepScore();
 
                 } else if (playerSelection === "SCISSORS" && computerSelection === "ROCK") {
                     ++cpuWin;
+                    ++numberOfRounds;
                     paraResult.textContent = 'The Computer picks ' + computerSelection +
                     ': Your brittle scissors are mangled and destroyed under the girth of my rock!';
                     keepScore();
 
                 } else if (playerSelection === "SCISSORS" && computerSelection === "PAPER") {
                     ++playerWin;
+                    ++numberOfRounds;
                     paraResult.textContent = 'The Computer picks ' + computerSelection +
                     ': I was once a crisp, pristine sheet of paper.... now confetti.  You\'ve bested me...';
                     keepScore();
@@ -246,37 +255,46 @@
                 paraChoice.textContent = "";
                 paraResult.textContent = "Please, make your next choice.";
             }
-
+            
             function keepScore() {
-                let score = `The Score is  ${playerWin} - ${cpuWin} - ${tie}`;
-                paraScore.textContent = score;
+                paraScore.textContent = `The Score is  ${playerWin} - ${cpuWin} - ${tie}`;
             } 
 
-            /**************************
-            USE FOR END OF GAME DISPLAY
-            CHANGE DIV.GAMECONTAINER CLASS TO .ENDOFGAME CLASS
-            TEXT.CONTENT IS DISPLAYS RESULTS BELOW
+            let score = `${playerWin} - ${cpuWin} - ${tie}`;
+            let finalScore = score.toString();
+
+            function gameOverDisplay() {
+                if (playerWin > cpuWin) {
+                    paraChoice.textContent = "";
+                    paraResult.textContent = "The game is over. YOU'VE WON!!!  The final score is: " + score;
+                    paraScore.textContent = "";
+
+                } else if (cpuWin > playerWin) {
+                    paraChoice.textContent = "";
+                    paraResult.textContent = "The game is over. YOU'VE LOST :( !!!  The final score is: " + score;
+                    paraScore.textContent = "";
+
+                } else {
+                    paraChoice.textContent = "";
+                    paraResult.textContent = "The game is over.  It has proven to be a struggle of equal wits.  TIE GAME!"   
+                    paraScore.textContent = "";
+                }
+            }   
+        
+            function resetGame() {
+                playerWin = cpuWin = tie = 0;
+                paraChoice.textContent = "";
+                paraResult.textContent = "Play again?"<br> "Select: Rock, Paper, or Scissors!";
+                paraScore.textContent = "";
+            }
             
 
-            function playGame() {
-                let numberOfRounds = 5;
-                for (i = 0; i < numberOfRounds; i++){
-                    playRound();
-                    keepScore();
-                    if (playerWin + cpuWin + tie == 5) {
-                        if (playerWin > cpuWin) {
-                            return "The game is over. YOU'VE WON!!!  The final score is: " + playerWin + " - " + cpuWin + " - " + tie;
-                        
-                        } else if (cpuWin > playerWin) {
-                            return "The game is over. YOU'VE LOST :( !!!  The final score is: " + playerWin + " - " + cpuWin + " - " + tie;
-                        
-                        } else {
-                            return "The game is over.  It has proven to be a struggle of equal wits.  TIE GAME!"   
-                        }
-                    }    
-                }
+            if (numberOfRounds > RoundsPerGame) {
+                clearTimeout(playRound());
+                gameOverDisplay();
+                resetGame();    
             }
-            ***************************/
+        
             
         </script>
     </body>
