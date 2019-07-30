@@ -5,9 +5,11 @@
         <style>
             html {
                 font-family: Arial, Helvetica, sans-serif;
+                box-sizing: border-box;
             }
             div.container {
                 max-width: 700px;
+                min-width: 700px;
                 margin: 0 auto;
                /* background-color: rgba(120, 255, 63, .5); */
             }
@@ -33,7 +35,7 @@
                 margin-top: 5px;
                 padding-top: 0px;
                 max-width: 100%;
-                height: 250px;
+                height: 270px;
             }
             .choiceRock, .choicePaper, .choiceScissors {
                 display: inline-block;
@@ -65,7 +67,7 @@
                 margin-top: 5px;
                 padding-top: 0px;
                 max-width: 100%;
-                height: 200px;
+                height: 220px;
                 
             }
             p {
@@ -104,22 +106,11 @@
             </div>
         </div>
         <script>
-/**********************************
-            I want:
-           
-           add "numberOfRounds" and "RoundsPerGame" variables, us this to check for a 5 round game. 
-           if (numberOfRounds == roundsPerGame) { ... use conditionals below in the playGame function, etc. }
-           
-           work toward a "reset" button, to reset the score... 
 
-           I've tried a couple times, the above. every time it's stopped the current funtionality...
-            
-            TO FIX:
-                keep score only for one game at a time, not beyond 5 rounds.  if the player chooses to play again, it should start fresh at 0.
 
-                make sure the final score and winner are displayed after each game of 5 rounds, not just the frist one.
-
-**********************************/
+/********************************
+888888888888888888888888888888888
+*********************************/
 
             const gameContainer = document.querySelector('.gamecontainer');
 
@@ -152,22 +143,22 @@
                 playerSelection = "ROCK"; 
                 paraChoice.textContent = 'Your choice is ' + playerSelection;
                 paraResult.textContent = "";
-                setTimeout(playRound, 1500);
-                setTimeout(chooseAgain, 5500);})
+                setTimeout(playRound, 1000);
+                setTimeout(chooseAgain, 4500);})
 
             btnPaper.addEventListener('click', () => {
                 playerSelection = "PAPER";
                 paraChoice.textContent = 'Your choice is ' + playerSelection;
                 paraResult.textContent = "";
-                setTimeout(playRound, 1500);
-                setTimeout(chooseAgain, 5500);});
+                setTimeout(playRound, 1000);
+                setTimeout(chooseAgain, 4500);});
 
             btnScissors.addEventListener('click', () => {
                 playerSelection = "SCISSORS"; 
                 paraChoice.textContent = 'Your choice is ' + playerSelection;
                 paraResult.textContent = "";
-                setTimeout(playRound, 1500);
-                setTimeout(chooseAgain, 5500);});
+                setTimeout(playRound, 1000);
+                setTimeout(chooseAgain, 4500);});
 
     
         
@@ -204,8 +195,9 @@
                     playerSelection === "SCISSORS" && computerSelection === "SCISSORS") {
                     ++tie;
                     ++numberOfRounds;
-                    paraResult.textContent = 'The Computer picks ' + computerSelection +': Tie, play again!';
+                    paraResult.textContent = 'The Computer picks ' + computerSelection +': Tie... it\'s just a tie, don\'t panic';
                     keepScore();
+                    End();
 
                 } else if (playerSelection === "ROCK" && computerSelection === "PAPER") {
                     ++cpuWin;
@@ -213,6 +205,7 @@
                     paraResult.textContent = 'The Computer picks ' + computerSelection +
                     ': You lose! Your rock is cloaked in my expansive paper - no way out!';
                     keepScore();
+                    End();
 
                 } else if (playerSelection === "ROCK" && computerSelection === "SCISSORS") {
                     ++playerWin;
@@ -220,6 +213,7 @@
                     paraResult.textContent = 'The Computer picks ' + computerSelection +
                     ': Congratulations, your victorious rock smashes my weak scissors';
                     keepScore();
+                    End();
 
                 } else if (playerSelection === "PAPER" && computerSelection === "ROCK") {
                     ++playerWin;
@@ -227,6 +221,7 @@
                     paraResult.textContent = 'The Computer picks ' + computerSelection +
                     ': I can\'t see! I\'m lost in your paper! You win, you win!!!';
                     keepScore();
+                    End();
 
                 } else if (playerSelection === "PAPER" && computerSelection === "SCISSORS") {
                     ++cpuWin;
@@ -234,13 +229,15 @@
                     paraResult.textContent = 'The Computer picks ' + computerSelection +
                     ': I snip and slice your paper to shreeds with my shiny new scissors!';
                     keepScore();
+                    End();
 
                 } else if (playerSelection === "SCISSORS" && computerSelection === "ROCK") {
                     ++cpuWin;
                     ++numberOfRounds;
                     paraResult.textContent = 'The Computer picks ' + computerSelection +
-                    ': Your brittle scissors are mangled and destroyed under the girth of my rock!';
+                    ': Your feeble scissors are mangled and destroyed under the girth of my rock!';
                     keepScore();
+                    End();
 
                 } else if (playerSelection === "SCISSORS" && computerSelection === "PAPER") {
                     ++playerWin;
@@ -248,12 +245,15 @@
                     paraResult.textContent = 'The Computer picks ' + computerSelection +
                     ': I was once a crisp, pristine sheet of paper.... now confetti.  You\'ve bested me...';
                     keepScore();
+                    End();
                 }
             }
 
             function chooseAgain() {
+               if (numberOfRounds != 5) { 
                 paraChoice.textContent = "";
                 paraResult.textContent = "Please, make your next choice.";
+            }
             }
             
             function keepScore() {
@@ -266,12 +266,12 @@
             function gameOverDisplay() {
                 if (playerWin > cpuWin) {
                     paraChoice.textContent = "";
-                    paraResult.textContent = "The game is over. YOU'VE WON!!!  The final score is: " + score;
+                    paraResult.textContent = "The game is over. YOU'VE WON!!!";
                     paraScore.textContent = "";
 
                 } else if (cpuWin > playerWin) {
                     paraChoice.textContent = "";
-                    paraResult.textContent = "The game is over. YOU'VE LOST :( !!!  The final score is: " + score;
+                    paraResult.textContent = "The game is over. YOU'VE LOST!!!  ...loser";
                     paraScore.textContent = "";
 
                 } else {
@@ -282,17 +282,17 @@
             }   
         
             function resetGame() {
-                playerWin = cpuWin = tie = 0;
+                playerWin = cpuWin = tie = numberOfRounds = 0;
                 paraChoice.textContent = "";
-                paraResult.textContent = "Play again?"<br> "Select: Rock, Paper, or Scissors!";
+                paraResult.textContent = "Play again? Select: Rock, Paper, or Scissors!";
                 paraScore.textContent = "";
             }
             
-
-            if (numberOfRounds > RoundsPerGame) {
-                clearTimeout(playRound());
-                gameOverDisplay();
-                resetGame();    
+            function End() {
+            if (numberOfRounds == RoundsPerGame) {
+                setTimeout(gameOverDisplay, 3000);
+                setTimeout(resetGame, 7000);    
+            }
             }
         
             
